@@ -4,18 +4,14 @@ import uvicorn
 from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import sys
+sys.path.append(r"/Users/kanu/Desktop/api")
 
-try:
-    # Assume we're a sub-module in a package.
-    from . import models
-except ImportError:
-    # Apparently no higher-level package has been imported, fall back to a local import.
-    import models
+from sql_app import models
+from sql_app import schemas
+from sql_app import crud
 
-from . import schemas
-from . import crud
-
-from .database import SessionLocal, engine
+from sql_app.database import SessionLocal, engine
 
 
 models.Base.metadata.create_all(bind=engine)
@@ -46,6 +42,13 @@ def read_root():
 @app.get("/users/{user_id}", response_model=schemas.UserInfo)
 def read_user(id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_id(db, id=id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
+    
+@app.get("/users/all/", response_model=schemas.UserInfo)
+def read_user(db: Session = Depends(get_db)):
+    db_user = crud.get_all_users(db)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
