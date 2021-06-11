@@ -6,6 +6,7 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import sys
 sys.path.append(r"/Users/kanu/Desktop/api")
+from typing import List
 
 from sql_app import models
 from sql_app import schemas
@@ -39,6 +40,7 @@ def get_db():
 def read_root():
     return {"Hello": "World"}
 
+#get single user
 @app.get("/users/{user_id}", response_model=schemas.UserInfo)
 def read_user(id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_id(db, id=id)
@@ -46,13 +48,26 @@ def read_user(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
     
-@app.get("/users/all/", response_model=schemas.UserInfo)
-def read_user(db: Session = Depends(get_db)):
+#get user from email
+@app.post("/users_by_email", response_model=schemas.UserInfo)
+def read_user(email: str, db: Session = Depends(get_db)):
+    db_user = crud.get_user_from_email(db, email=email)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
+    
+#get all users
+@app.get("/users", response_model=List[schemas.UserInfo])
+def get_all_users(db: Session = Depends(get_db)):
     db_user = crud.get_all_users(db)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+#insert user
+@app.post("/users/", response_model=schemas.UserInfo)
+def create_user(user: schemas.UserInfo, db: Session = Depends(get_db)):
+    #db_user = crud.createUser(db, email=user.email,points=user.points,timestamp=user.timestamp,courseName=user.courseName)
+    #if db_user:
+    #    raise HTTPException(status_code=400, detail="Email already registered")
+    return crud.createUser(db=db, user=user)
