@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 from datetime import datetime
-class UserInfo(BaseModel):
+class UserSchema(BaseModel):
     id: int
     email : str
     points : int
