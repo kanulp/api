@@ -9,7 +9,7 @@ class User(Base):
     email = Column(String, unique=True)
     userName = Column(String, unique=True)
     points = Column(Integer)
-    timestamp = Column(String)
+    #timestamp = Column(String)
     courseName = Column(String)
     incorrectCount = Column(Integer)
     correctCount = Column(Integer)

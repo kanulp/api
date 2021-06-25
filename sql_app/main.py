@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import sys
-sys.path.append(r"/Users/kanu/Desktop/api")
+sys.path.append(r"/Users/kanu/Desktop/Tim Project/newnewapi")
 from typing import List
 
 from sql_app import models

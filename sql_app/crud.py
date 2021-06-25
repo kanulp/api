@@ -15,7 +15,7 @@ def get_all_users(db: Session):
 
 
 def createUser(db: Session, user: schemas.UserSchema):
-    db_user = models.User(email=user.email, points=user.points, timestamp=user.timestamp,courseName=user.courseName,userName=user.userName,inCorrectCount=user.incorrectCount,correctCount=user.correctCount)
+    db_user = models.User(email=user.email, points=user.points, courseName=user.courseName,userName=user.userName,incorrectCount=user.incorrectCount,correctCount=user.correctCount,setCount=user.setCount,userAverage=user.userAverage,totalTime=user.totalTime,answerCount=user.answerCount)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
