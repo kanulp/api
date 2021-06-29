@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import sys
-sys.path.append(r"/Users/kanu/Desktop/Tim Project/newnewapi")
+sys.path.append(r"/Users/kanu/Desktop/Tim Project/api")
 from typing import List
 
 from sql_app import models
@@ -71,3 +71,12 @@ def create_user(user: schemas.UserSchema, db: Session = Depends(get_db)):
     #if db_user:
     #    raise HTTPException(status_code=400, detail="Email already registered")
     return crud.createUser(db=db, user=user)
+
+
+#insert userName
+@app.post("/username", response_model=schemas.UserNameSchema)
+def create_userName(user: schemas.UserNameSchema, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_username(db, username=user.userName)
+    if db_user:
+        raise HTTPException(status_code=400, detail="Username already registered")
+    return crud.createUserName(db=db, user=user)

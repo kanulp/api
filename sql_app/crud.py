@@ -20,3 +20,14 @@ def createUser(db: Session, user: schemas.UserSchema):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+
+def get_user_by_username(db: Session, username: str):
+    return db.query(models.UserName).filter(models.UserName.userName == username).first()
+
+def createUserName(db: Session, user: schemas.UserNameSchema):
+    db_user = models.UserName(email=user.email,userName=user.userName)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user

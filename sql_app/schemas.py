@@ -14,3 +14,9 @@ class UserSchema(BaseModel):
     userName : str
     class Config:
         orm_mode = True
+
+class UserNameSchema(BaseModel):
+    email : str
+    userName : str
+    class Config:
+        orm_mode = True
