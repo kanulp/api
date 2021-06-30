@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import sys
-sys.path.append(r"/Users/kanu/Desktop/Tim Project/api")
+sys.path.append(r"/Users/kanu/Desktop/api")
 from typing import List
 
 from sql_app import models
@@ -80,3 +80,14 @@ def create_userName(user: schemas.UserNameSchema, db: Session = Depends(get_db))
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registered")
     return crud.createUserName(db=db, user=user)
+
+
+#check username
+@app.post("/check_username")
+def check_username(username: str, db: Session = Depends(get_db)):
+    db_user = crud.get_user_by_username(db, username=username)
+    if db_user:
+        return {"message":"username not available."}
+    else :
+        return {"message":"username available."}
+    return db_user
