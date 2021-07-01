@@ -1,9 +1,10 @@
-from typing import List
+from typing import List,Optional
 from pydantic import BaseModel
 from datetime import datetime
 class UserSchema(BaseModel):
     email : str
     points : int
+    timestamp : Optional[datetime]
     courseName : str
     incorrectCount : int
     correctCount : int

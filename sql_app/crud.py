@@ -8,7 +8,9 @@ def get_user_by_id(db: Session, id: int):
 
 
 def get_user_from_email(db: Session, email: str):
-    return db.query(models.User).filter(models.User.email == email).first()
+    data = []
+    return db.query(models.User).filter(models.User.email == email,sorted)
+
 
 def get_all_users(db: Session):
     return db.query(models.User).all()
@@ -31,3 +33,4 @@ def createUserName(db: Session, user: schemas.UserNameSchema):
     db.commit()
     db.refresh(db_user)
     return db_user
+

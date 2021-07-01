@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from .database import Base
+from sqlalchemy.types import DateTime
 
 
 class User(Base):
@@ -9,7 +10,7 @@ class User(Base):
     email = Column(String, unique=True)
     userName = Column(String, unique=True)
     points = Column(Integer)
-    #timestamp = Column(String)
+    timestamp = Column(DateTime)
     courseName = Column(String)
     incorrectCount = Column(Integer)
     correctCount = Column(Integer)

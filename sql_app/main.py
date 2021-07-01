@@ -49,7 +49,7 @@ def read_user(id: int, db: Session = Depends(get_db)):
     return db_user
     
 #get user from email
-@app.post("/users_by_email", response_model=schemas.UserSchema)
+@app.get("/users_by_email", response_model=schemas.UserSchema)
 def read_user(email: str, db: Session = Depends(get_db)):
     db_user = crud.get_user_from_email(db, email=email)
     if db_user is None:
