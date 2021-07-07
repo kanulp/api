@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import sys
-sys.path.append(r"/Users/kanu/Desktop/api")
+sys.path.append(r"/Users/kanu/Desktop/Tim Project/api")
 from typing import List
 
 from sql_app import models
@@ -50,8 +50,8 @@ def read_user(id: int, db: Session = Depends(get_db)):
     
 #get user from email
 @app.get("/users_by_email", response_model=schemas.UserSchema)
-def read_user(email: str, db: Session = Depends(get_db)):
-    db_user = crud.get_user_from_email(db, email=email)
+def read_user_by_email(email: str, courseName:str, db: Session = Depends(get_db)):
+    db_user = crud.get_user_from_email(db, email=email,courseName=courseName)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
@@ -90,4 +90,11 @@ def check_username(username: str, db: Session = Depends(get_db)):
         return {"message":"username not available."}
     else :
         return {"message":"username available."}
+    return db_user
+
+@app.get("/get_user_stats_general", response_model=schemas.UserSchema)
+def get_user_stats_general(email: str, courseName:str, db: Session = Depends(get_db)):
+    db_user = crud.get_user_stats_general(db, email=email,courseName=courseName)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
     return db_user

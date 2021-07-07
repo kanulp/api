@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
 
 from . import models, schemas
 
@@ -7,9 +8,13 @@ def get_user_by_id(db: Session, id: int):
     return db.query(models.User).filter(models.User.id == id).first()
 
 
-def get_user_from_email(db: Session, email: str):
-    data = []
-    return db.query(models.User).filter(models.User.email == email,sorted)
+def get_user_from_email(db: Session, email: str,courseName:str):
+    return db.query(models.User).filter(models.User.email == email).filter(models.User.courseName==courseName).order_by(models.User.timestamp.desc()).first()
+
+
+def get_user_stats_general(db: Session, email: str,courseName:str):
+    return db.query(models.User).filter(models.User.email == email).filter(models.User.courseName==courseName).filter(func.sum(models.User.correctCount).label('total_correct_count')).first()
+
 
 
 def get_all_users(db: Session):
