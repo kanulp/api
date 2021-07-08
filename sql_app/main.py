@@ -98,3 +98,11 @@ def get_user_stats_general(email: str, courseName:str, db: Session = Depends(get
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+#@app.get("/users_by_csv", response_model=List[schemas.UserSchema])
+@app.get("/users_by_csv")
+def read_users_by_csv(courseName:str, db: Session = Depends(get_db)):
+    db_user = crud.get_users_by_csv(db, courseName=courseName)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user

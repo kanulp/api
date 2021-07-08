@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
-
+from sqlalchemy import distinct
 from . import models, schemas
 
 
@@ -39,3 +39,6 @@ def createUserName(db: Session, user: schemas.UserNameSchema):
     db.refresh(db_user)
     return db_user
 
+def get_users_by_csv(db: Session, courseName: str):
+    return db.query(models.User.email).distinct().filter(models.User.courseName==courseName).all()
+    
