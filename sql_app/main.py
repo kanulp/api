@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import sys
-sys.path.append(r"/Users/kanu/Desktop/Tim Project/api")
+sys.path.append(r"/Users/user/PycharmProjects/api")
 from typing import List
 
 from sql_app import models
@@ -81,6 +81,19 @@ def create_userName(user: schemas.UserNameSchema, db: Session = Depends(get_db))
         raise HTTPException(status_code=400, detail="Username already registered")
     return crud.createUserName(db=db, user=user)
 
+@app.post("/new_csv", response_model=schemas.csvSchema)
+def create_CSV(user: schemas.csvSchema, db: Session = Depends(get_db)):
+    db_user = crud.newCSV(db, email=user.email,courseName=user.courseName)
+    if db_user:
+        raise HTTPException(status_code=400, detail="Not availiable")
+    return crud.newCSV(db=db, user=user)
+
+@app.get("/get_csvs", response_model=List[schemas.csvSchema])
+def get_csvs(email: str, db: Session = Depends(get_db)):
+    db_user = crud.getCSVs(db, email=email)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="Not found")
+    return db_user
 
 #check username
 @app.post("/check_username")
