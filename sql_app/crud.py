@@ -39,6 +39,15 @@ def createUserName(db: Session, user: schemas.UserNameSchema):
     db.refresh(db_user)
     return db_user
 
+def newCSV(db: Session, user: schemas.csvSchema):
+    db_user = models.CSV(email=user.email,courseName=user.courseName)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def getCSVs(db: Session, email: str):
+    return db.query(models.CSV).filter(models.CSV.email == email).all()
+
 def get_users_by_csv(db: Session, courseName: str):
     return db.query(models.User.email).distinct().filter(models.User.courseName==courseName).all()
-    
