@@ -21,3 +21,9 @@ class UserNameSchema(BaseModel):
     userName : str
     class Config:
         orm_mode = True
+
+class csvSchema(BaseModel):
+    email : str
+    courseName : str
+    class Config:
+        orm_mode = True
