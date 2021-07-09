@@ -8,7 +8,6 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True)
-    userName = Column(String, unique=True)
     points = Column(Integer)
     timestamp = Column(DateTime)
     courseName = Column(String)

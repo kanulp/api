@@ -12,7 +12,6 @@ class UserSchema(BaseModel):
     setCount : int
     userAverage : int
     totalTime : int
-    userName : str
     class Config:
         orm_mode = True
 

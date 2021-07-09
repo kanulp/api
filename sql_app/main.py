@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import sys
-sys.path.append(r"/Users/user/PycharmProjects/api")
+sys.path.append(r"/Users/kanu/Desktop/Tim Project/api")
 from typing import List
 
 from sql_app import models
@@ -82,11 +82,8 @@ def create_userName(user: schemas.UserNameSchema, db: Session = Depends(get_db))
     return crud.createUserName(db=db, user=user)
 
 @app.post("/new_csv", response_model=schemas.csvSchema)
-def create_CSV(user: schemas.csvSchema, db: Session = Depends(get_db)):
-    db_user = crud.newCSV(db, email=user.email,courseName=user.courseName)
-    if db_user:
-        raise HTTPException(status_code=400, detail="Not availiable")
-    return crud.newCSV(db=db, user=user)
+def create_CSV(csvSchema: schemas.csvSchema, db: Session = Depends(get_db)):
+    return crud.newCSV(db=db, user=csvSchema)
 
 @app.get("/get_csvs", response_model=List[schemas.csvSchema])
 def get_csvs(email: str, db: Session = Depends(get_db)):
@@ -105,7 +102,7 @@ def check_username(username: str, db: Session = Depends(get_db)):
         return {"message":"username available."}
     return db_user
 
-@app.get("/get_user_stats_general", response_model=schemas.UserSchema)
+@app.get("/get_user_stats_general")
 def get_user_stats_general(email: str, courseName:str, db: Session = Depends(get_db)):
     db_user = crud.get_user_stats_general(db, email=email,courseName=courseName)
     if db_user is None:
