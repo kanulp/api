@@ -25,3 +25,10 @@ class UserName(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True)
     userName = Column(String, unique=True)
+
+class CSV(Base):
+    __tablename__ = "csv_logs"
+
+    id = Column(Integer, primary_key=True)
+    email = Column(String, unique=True)
+    courseName = Column(String, unique=True)
