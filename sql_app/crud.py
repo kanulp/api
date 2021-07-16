@@ -14,7 +14,7 @@ def get_user_from_email(db: Session, email: str,courseName:str):
 
 
 def get_user_stats_general(db: Session, email: str,courseName:str):
-    query = text("SELECT email, courseName, SUM(incorrectCount) total_incorrect, SUM(correctCount) total_correct_count, SUM(points) total_points, SUM(answerCount) total_answerCount, ROUND(AVG(userAverage)) total_average  FROM users where courseName=:courseName and email=:email")
+    query = text("SELECT email, courseName, SUM(incorrectCount) total_incorrect, SUM(correctCount) total_correct_count, SUM(points) total_points, SUM(answerCount) total_answerCount, SUM(totalTime) total_upTime, SUM(setCount) total_Sets, ROUND(AVG(userAverage)) total_average  FROM users where courseName=:courseName and email=:email")
     data = { 'courseName' : courseName ,'email':email}
     return db.execute(query,data).fetchall()
     #return db.query(models.User).filter(models.User.email == email).filter(models.User.courseName==courseName).filter(func.sum(models.User.correctCount).label('total_correct_count')).first()
@@ -44,7 +44,7 @@ def createUserName(db: Session, user: schemas.UserNameSchema):
     return db_user
 
 def newCSV(db: Session, user: schemas.csvSchema):
-    db_user = models.CSV(email=user.email,courseName=user.courseName)
+    db_user = models.CSV(email=user.email,courseName=user.courseName, timestamp = user.timestamp)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -55,7 +55,7 @@ def getCSVs(db: Session, email: str):
 
 def get_users_by_csv(db: Session, courseName: str):
     
-    query = text("Select DISTINCT email from csv_logs where courseName = :course")
+    query = text("Select DISTINCT email from users where courseName = :course")
     data = { 'course' : courseName }
     return db.execute(query,data).fetchall()
     #return db.query(models.User.email).distinct().filter(models.User.courseName==courseName).all()
