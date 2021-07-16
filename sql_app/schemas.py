@@ -23,6 +23,7 @@ class UserNameSchema(BaseModel):
 
 class csvSchema(BaseModel):
     email : str
+    timestamp: Optional[datetime]
     courseName : str
     class Config:
         orm_mode = True
