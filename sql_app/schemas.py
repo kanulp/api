@@ -25,5 +25,11 @@ class csvSchema(BaseModel):
     email : str
     timestamp: Optional[datetime]
     courseName : str
+    weekstoDraw : str
+    minAns : str
+    minCorrect : str
+    minAverage : str
+    minSets : str
+    drawPrize : str
     class Config:
         orm_mode = True
