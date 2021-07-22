@@ -60,16 +60,16 @@ def get_users_by_csv(db: Session, courseName: str):
     return db.execute(query,data).fetchall()
     #return db.query(models.User.email).distinct().filter(models.User.courseName==courseName).all()
 
-def update_drawData(db: Session, courseName: str):
-    db.query(models.CSV).filter(courseName == user.courseName).update({'weekstoDraw': 'Complete'})
-    db.commit()
-
-def delete_Records(db: Session, courseName: str):
-    query = text("DELETE * from users where courseName = :course")
-    data = {'course': courseName}
-    db.execute(query,data)
-
-def delete_CSV(db: Session, courseName: str):
-    query = text("DELETE * from csv_logs where courseName = :course")
-    data = {'course': courseName}
-    db.execute(query,data)
+# def update_drawData(db: Session, courseName: str):
+#     db.query(models.CSV).filter(courseName == user.courseName).update({'weekstoDraw': 'Complete'})
+#     db.commit()
+#
+# def delete_Records(db: Session, courseName: str):
+#     query = text("DELETE * from users where courseName = :course")
+#     data = {'course': courseName}
+#     db.execute(query,data)
+#
+# def delete_CSV(db: Session, courseName: str):
+#     query = text("DELETE * from csv_logs where courseName = :course")
+#     data = {'course': courseName}
+#     db.execute(query,data)
