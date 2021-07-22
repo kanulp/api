@@ -26,7 +26,7 @@ def get_all_users(db: Session):
 
 
 def createUser(db: Session, user: schemas.UserSchema):
-    db_user = models.User(email=user.email, points=user.points, courseName=user.courseName,incorrectCount=user.incorrectCount,correctCount=user.correctCount,setCount=user.setCount,userAverage=user.userAverage,totalTime=user.totalTime,answerCount=user.answerCount)
+    db_user = models.User(email=user.email, points=user.points, courseName=user.courseName,incorrectCount=user.incorrectCount,correctCount=user.correctCount,setCount=user.setCount,userAverage=user.userAverage,totalTime=user.totalTime,answerCount=user.answerCount, eligible=user.eligible)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -44,7 +44,7 @@ def createUserName(db: Session, user: schemas.UserNameSchema):
     return db_user
 
 def newCSV(db: Session, user: schemas.csvSchema):
-    db_user = models.CSV(email=user.email,courseName=user.courseName, timestamp = user.timestamp)
+    db_user = models.CSV(email=user.email,courseName=user.courseName, timestamp = user.timestamp, weekstoDraw=user.weekstoDraw, minAns=user.minAns, minCorrect=user.minCorrect, minAverage=user.minAverage, minSets=user.minSets, drawPrize=user.drawPrize)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

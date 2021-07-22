@@ -17,6 +17,7 @@ class User(Base):
     setCount = Column(Integer)
     userAverage = Column(Integer)
     totalTime = Column(Integer)
+    eligible = Column(String)
 
 class UserName(Base):
     __tablename__ = "username"
