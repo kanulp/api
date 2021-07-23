@@ -1,5 +1,5 @@
-fastapi
-uvicorn
-mysql
-mysql-connector-python
-sqlalchemy
+fastapi==0.45.0
+uvicorn==0.14.0
+mysql==8.0.25
+mysql-connector-python==8.0.26
+sqlalchemy==1.4.22
