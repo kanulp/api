@@ -14,7 +14,7 @@ def get_user_from_email(db: Session, email: str,courseName:str):
 
 
 def get_user_stats_general(db: Session, email: str,courseName:str):
-    query = text("SELECT email, courseName, SUM(incorrectCount) total_incorrect, SUM(correctCount) total_correct_count, SUM(points) total_points, SUM(answerCount) total_answerCount, SUM(totalTime) total_upTime, SUM(setCount) total_Sets, ROUND(AVG(userAverage)) total_average  FROM users where courseName=:courseName and email=:email")
+    query = text("SELECT email, courseName, SUM(incorrectCount) total_incorrect, SUM(correctCount) total_correct_count, SUM(points) total_points, SUM(answerCount) total_answerCount, SUM(totalTime) total_upTime, SUM(setCount) total_Sets, ROUND(AVG(userAverage)) total_average, eligible  FROM users where courseName=:courseName and email=:email")
     data = { 'courseName' : courseName ,'email':email}
     return db.execute(query,data).fetchall()
     #return db.query(models.User).filter(models.User.email == email).filter(models.User.courseName==courseName).filter(func.sum(models.User.correctCount).label('total_correct_count')).first()
@@ -60,16 +60,23 @@ def get_users_by_csv(db: Session, courseName: str):
     return db.execute(query,data).fetchall()
     #return db.query(models.User.email).distinct().filter(models.User.courseName==courseName).all()
 
-# def update_drawData(db: Session, courseName: str):
-#     db.query(models.CSV).filter(courseName == user.courseName).update({'weekstoDraw': 'Complete'})
-#     db.commit()
-#
-# def delete_Records(db: Session, courseName: str):
-#     query = text("DELETE * from users where courseName = :course")
-#     data = {'course': courseName}
-#     db.execute(query,data)
-#
-# def delete_CSV(db: Session, courseName: str):
-#     query = text("DELETE * from csv_logs where courseName = :course")
-#     data = {'course': courseName}
-#     db.execute(query,data)
+def activateDraw(db: Session, courseName: str):
+    query = text("SELECT email, courseName, eligible FROM users where courseName=:courseName and eligible='true' ORDER BY RAND() LIMIT 1")
+    data = {'courseName': courseName}
+    return db.execute(query, data).fetchall()
+
+def update_drawData(db: Session, courseName: str):
+    query = text("UPDATE csv_logs SET weekstoDraw='complete' WHERE courseName=:courseName")
+    data = {'courseName': courseName}
+    db.execute(query, data)
+
+def delete_Records(db: Session, courseName: str):
+    query = text("DELETE * from users WHERE courseName=:course")
+    data = {'course': courseName}
+    db.execute(query,data)
+
+def delete_CSV(db: Session, courseName: str):
+    query = text("DELETE * from csv_logs WHERE courseName=:course")
+    data = {'course': courseName}
+    db.execute(query, data)
+
