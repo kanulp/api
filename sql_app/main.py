@@ -124,4 +124,12 @@ def activate_draw(courseName:str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="No users have qualified")
     return db_user
 
+@app.put("/update_draw_data")
+def update_draw_data(courseName: str, db: Session = Depends(get_db)):
+    crud.update_drawData(db, courseName=courseName)
+
+@app.delete("/delete_records")
+def delete_records(courseName: str, db: Session = Depends(get_db)):
+    crud.delete_Records(db, courseName=courseName)
+
 
