@@ -71,12 +71,12 @@ def update_drawData(db: Session, courseName: str):
     db.execute(query, data)
 
 def delete_Records(db: Session, courseName: str):
-    query = text("DELETE * from users WHERE courseName=:course")
+    query = text("DELETE FROM users WHERE courseName=:course")
     data = {'course': courseName}
     db.execute(query,data)
 
 def delete_CSV(db: Session, courseName: str):
-    query = text("DELETE * from csv_logs WHERE courseName=:course")
+    query = text("DELETE FROM csv_logs WHERE courseName=:course")
     data = {'course': courseName}
     db.execute(query, data)
 
