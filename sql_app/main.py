@@ -116,3 +116,12 @@ def read_users_by_csv(courseName:str, db: Session = Depends(get_db)):
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
+@app.get("/activate_draw")
+def activate_draw(courseName:str, db: Session = Depends(get_db)):
+    db_user = crud.activateDraw(db, courseName=courseName)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="No users have qualified")
+    return db_user
+
+
