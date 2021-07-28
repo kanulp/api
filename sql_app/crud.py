@@ -67,16 +67,22 @@ def activateDraw(db: Session, courseName: str):
 
 def update_drawData(db: Session, courseName: str):
     query = text("UPDATE csv_logs SET weekstoDraw='complete' WHERE courseName=:courseName")
-    data = {'courseName': courseName}
-    db.execute(query, data)
+    data = { 'courseName' : courseName}
+    d = db.execute(query, data)
+    db.commit()
+    return {"message":"updated successfully."}
 
 def delete_Records(db: Session, courseName: str):
     query = text("DELETE FROM users WHERE courseName=:course")
     data = {'course': courseName}
     db.execute(query,data)
+    db.commit()
+    return {"message":"deleted successfully from users."}
 
 def delete_CSV(db: Session, courseName: str):
     query = text("DELETE FROM csv_logs WHERE courseName=:course")
     data = {'course': courseName}
     db.execute(query, data)
+    db.commit()
+    return {"message":"deleted successfully from csv."}
 

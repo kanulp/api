@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import sys
-sys.path.append(r"/Users/user/PycharmProjects/api")
+sys.path.append(r"/Users/kanu/Desktop/Tim Project/api")
 from typing import List
 
 from sql_app import models
@@ -124,12 +124,14 @@ def activate_draw(courseName:str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="No users have qualified")
     return db_user
 
-@app.put("/update_draw_data")
+@app.post("/update_draw_data")
 def update_draw_data(courseName: str, db: Session = Depends(get_db)):
-    crud.update_drawData(db, courseName=courseName)
+    res = crud.update_drawData(db, courseName=courseName)
+    return res
 
-@app.delete("/delete_records")
+@app.post("/delete_records")
 def delete_records(courseName: str, db: Session = Depends(get_db)):
-    crud.delete_Records(db, courseName=courseName)
+    res = crud.delete_Records(db, courseName=courseName)
+    return res
 
 
