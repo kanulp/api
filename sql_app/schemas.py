@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from datetime import datetime
 class UserSchema(BaseModel):
     email : str
-    points : int
+    teacher : str
     timestamp : Optional[datetime]
     courseName : str
     incorrectCount : int
