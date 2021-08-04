@@ -12,7 +12,7 @@ class UserSchema(BaseModel):
     setCount : int
     userAverage : int
     totalTime : int
-    eligible : str
+    eligible : Optional[str]
     class Config:
         orm_mode = True
 
