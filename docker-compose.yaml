@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: "db"
+    image: mysql
+    environment:
+      MYSQL_DATABASE: studyApp
+      MYSQL_ROOT_PASSWORD: 123
+    ports:
+      - "3306:3306"
+
+  api:
+    links:
+      - "db"
+    container_name: "api"
+    build: .
+    ports:
+      - "80:80"
+    depends_on :
+      - "db"
