@@ -16,7 +16,7 @@ def get_user_from_email(db: Session, email: str, courseName: str, teacher: str):
 
 def get_user_stats_general(db: Session, email: str, courseName: str, teacher: str):
     query = text(
-        "SELECT email, teacher, courseName, SUM(incorrectCount) total_incorrect, SUM(correctCount) total_correct_count, SUM(answerCount) total_answerCount, SUM(totalTime) total_upTime, SUM(setCount) total_Sets, ROUND(AVG(userAverage)) total_average, eligible  FROM users WHERE courseName=:courseName and email=:email AND teacher=:teacher")
+        "SELECT email, teacher, courseName, SUM(incorrectCount) total_incorrect, SUM(correctCount) total_correct_count, SUM(answerCount) total_answerCount, SUM(totalTime) total_upTime, SUM(setCount) total_Sets, ROUND(AVG(userAverage)) total_average, eligible  FROM users WHERE courseName=:courseName and email=:email AND teacher=:teacher GROUP BY email, teacher courseName, eligible")
     data = {'courseName': courseName, 'email': email, 'teacher': teacher}
     return db.execute(query, data).fetchall()
     # return db.query(models.User).filter(models.User.email == email).filter(models.User.courseName==courseName).filter(func.sum(models.User.correctCount).label('total_correct_count')).first()
@@ -61,7 +61,7 @@ def getCSVs(db: Session, email: str):
 
 
 def get_users_by_csv(db: Session, courseName: str, teacher: str):
-    query = text("Select DISTINCT email from users WHERE courseName=:courseName AND teacher=:teacher")
+    query = text("Select DISTINCT email, eligible from users WHERE courseName=:courseName AND teacher=:teacher")
     data = {'courseName': courseName, 'teacher': teacher}
     return db.execute(query, data).fetchall()
     # return db.query(models.User.email).distinct().filter(models.User.courseName==courseName).all()
