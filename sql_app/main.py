@@ -6,7 +6,9 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import sys
 
-sys.path.append(r"/Users/user/PycharmProjects/api")
+#sys.path.append(r"/Users/user/PycharmProjects/api")
+sys.path.append(r"/home/azureuser/studyappbackend/api")
+
 from typing import List
 
 from sql_app import models
