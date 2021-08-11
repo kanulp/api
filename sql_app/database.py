@@ -4,8 +4,8 @@ from sqlalchemy.orm import sessionmaker
 import time
 
 time.sleep(30)
-#SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://aihsiumy_username:aihsiumy_username@localhost:3306/aihsiumy_question"
 SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:123@db:3306/studyApp"
+#SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:123@db:3306/studyApp"
 #SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:romeooscar2tango@localhost:3306/studyApp"
 
 engine = create_engine(
