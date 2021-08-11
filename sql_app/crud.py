@@ -84,7 +84,7 @@ def update_drawData(db: Session, courseName: str, email: str):
 
 def delete_Records(db: Session, courseName: str, teacher: str):
     query = text("DELETE FROM users WHERE courseName=:courseName and teacher=:teacher")
-    data = {'course': courseName, 'teacher':teacher}
+    data = {'courseName': courseName, 'teacher':teacher}
     db.execute(query, data)
     db.commit()
     return {"message": "deleted successfully from users."}
@@ -92,7 +92,7 @@ def delete_Records(db: Session, courseName: str, teacher: str):
 
 def delete_CSV(db: Session, courseName: str, email: str):
     query = text("DELETE FROM csv_logs WHERE courseName=:courseName and email=:email")
-    data = {'course': courseName, 'email':email}
+    data = {'courseName': courseName, 'email':email}
     db.execute(query, data)
     db.commit()
     return {"message": "deleted successfully from csv."}
